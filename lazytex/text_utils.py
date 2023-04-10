@@ -1,7 +1,7 @@
 import sys
 
 
-def get_file_lines(file_name: str) -> list:
+def get_file_lines(file_name: str) -> list | None:
     """
     Read a file and return a list of lines.
     """
@@ -16,7 +16,7 @@ def get_file_lines(file_name: str) -> list:
         sys.exit(1)
 
 
-def replace_operators(statement: str) -> str:
+def convert_to_latex(statement: str) -> str:
     """
     Replace the operators in a string with their LaTeX equivalents.
     Also adds boldface to the t and c variables.
@@ -43,13 +43,13 @@ def format_row(statement: str, law: str) -> str:
     | $<statement>$ | <law> |
     """
     start = "| $\\ \\ \\ \\ \\ " if law == "---" else "| $\\ \\equiv \\ "
-    converted_statement = replace_operators(statement)
-    return start + converted_statement.rstrip() + "$ | " + law.rstrip() + " |\n"
+    latex_statement = convert_to_latex(statement)
+    return start + latex_statement.rstrip() + "$ | " + law.rstrip() + " |\n"
 
 
-def generate_table(lines: list, output_file: str) -> None:
+def generate_table(lines: list) -> None:
     """
-    Takes a list of lines from a file that contain substrings equivalent to 
+    Takes a list of lines from a file that contain substrings equivalent to
     statements and logical equivalence laws formatted as:
     <statement>  # <law>
 
