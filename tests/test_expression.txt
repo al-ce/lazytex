@@ -1,0 +1,28 @@
+p = True
+q = True
+r = True
+t = True
+
+# START
+[(p > q) and (q > r)] > (p > r) == t
+[(-p or q) and (q > r)] > (p > r)        # by implication
+[(-p or q) and (-q or r)] > (p > r)      # by implication
+[(-p or q) and (-q or r)] > (-p or r)    # by implication
+-[(-p or q) and (-q or r)] or (-p or r)  # by implication
+[-(-p or q) or -(-q or r)] or (-p or r)  # by De Morgan's law
+[(p and -q) or -(-q or r)] or (-p or r)  # by De Morgan's law and double negation
+[(p and -q) or (q and -r)] or (-p or r)    # by De Morgan's law and double negation
+(p and -q) or (q and -r) or -p or r      # by associative law
+-p or (p and -q) or (q and -r) or r      # by commutative law
+[(-p or p) and (-p or -q)] or (q and -r) or r  # by distributive law
+[t and (-p or -q)] or (q and -r) or r    # by negation law
+(-p or -q) or (q and -r) or r            # by identity law
+(-p or -q) or r or (q and -r)            # by commutative law
+(-p or -q) or ((r or q) and (r or -r))   # by distributive law
+(-p or -q) or [(r or q) and t]           # by negation law
+(-p or -q) or (r or q)                   # by identity law
+-p or -q or r or q                       # by associative law
+q or -q or r or -p                       # by commutative law
+(q or -q) or r or -p                     # by associative law
+t or r or -p                             # by negation law
+t                                       # by universal bound law

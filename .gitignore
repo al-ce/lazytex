@@ -1,0 +1,12 @@
+/*
+
+!docs
+!texsanity
+!tests
+
+!.gitignore
+!README.md
+
+__pycache__
+*.egg-info
+
