@@ -1,3 +1,4 @@
+import pathlib
 import pytest
 
 import lazytex.text_utils as tu
@@ -95,3 +96,57 @@ def test_generate_table():
     ]
 
     assert tu.generate_table(valid_list) == expected_table
+
+
+def test_check_file_exists(monkeypatch):
+    """
+    Test that :func:`check_file_exists` correctly checks if a file exists.
+    It should return early if the output file does not exist. If it does, it
+    should ask the user if they want to overwrite it in a loop until a valid
+    response is given. If the user enters 'n' or 'N', the program should exit.
+    """
+
+    non_existent_file = "does_not_exist.txt"
+    assert not pathlib.Path(non_existent_file).is_file()
+    assert not tu.check_file_exists(non_existent_file)
+
+    assert pathlib.Path("tests/test_data/test_file_reader.txt").is_file()
+
+    monkeypatch.setattr("builtins.input", lambda _: "n")
+    with pytest.raises(SystemExit) as exc_info:
+        tu.check_file_exists("tests/test_data/test_file_reader.txt")
+    assert exc_info.type == SystemExit
+
+    monkeypatch.setattr("builtins.input", lambda _: "y")
+    assert tu.check_file_exists("tests/test_data/test_file_reader.txt")
+
+
+def test_write_table_to_file():
+    """
+    Test that :func:`write_table_to_file` correctly writes the table to a
+    markdown file. It should insert a header row at the top of the table,
+    and successfully write the table to the file.
+
+    """
+
+    test_table = [
+        "| $\\ \\ \\ \\ \\ p \\to q \\ \\equiv \\ p \\ \\lor \\ q$ | --- |\n",
+        "| $\\ \\equiv \\ p \\ \\lor \\ q$ | by implication |\n",
+    ]
+
+    tu.write_table_to_file(test_table, "tests/test_data/test_output.md")
+
+    assert pathlib.Path("tests/test_data/test_output.md").is_file()
+
+    with open("tests/test_data/test_output.md", "r") as f:
+        output = f.readlines()
+
+    to_insert = [
+        "| Equivalence | Law |\n",
+        "| :--- | :--- |\n",
+    ]
+    reference_table = to_insert + test_table
+
+    assert output == reference_table
+    pathlib.Path("tests/test_data/test_output.md").unlink()
+    assert not pathlib.Path("tests/test_data/test_output.md").is_file()

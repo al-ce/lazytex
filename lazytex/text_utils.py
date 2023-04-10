@@ -1,3 +1,4 @@
+import pathlib
 import sys
 
 
@@ -79,11 +80,36 @@ def generate_table(lines: list) -> None:
     return table
 
 
+def check_file_exists(output_file: str) -> None | bool:
+    """
+    Checks if the output file already exists. If it does, asks the user
+    if they want to overwrite it. If not, exits the program. Returns True if
+    the file exists and the user wants to overwrite it.
+    """
+
+    if not pathlib.Path(output_file).exists():
+        return
+
+    print(f"Warning: file '{output_file}' already exists.", file=sys.stderr)
+
+    continue_check = ""
+    while continue_check.lower() not in ['y', 'n']:
+        continue_check = input("Continue and overwrite? [y/n] ")
+
+    if continue_check.lower() == 'n':
+        print("Exiting...")
+        sys.exit(0)
+    return True
+
+
 def write_table_to_file(table: list, output_file: str) -> None:
     """
     Takes a list of formatted markdown table rows and writes them to the
     output file.
     """
+
+    check_file_exists(output_file)
+
     with open(output_file, 'w') as f:
         f.write("| Equivalence | Law |\n")
         f.write("| :--- | :--- |\n")  # Add alignment for the table columns
