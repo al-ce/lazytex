@@ -114,11 +114,3 @@ def write_table_to_file(table: list, output_file: str) -> None:
         f.write("| Equivalence | Law |\n")
         f.write("| :--- | :--- |\n")  # Add alignment for the table columns
         f.write("".join(table))
-
-
-if __name__ == "__main__":
-    lines = get_file_lines('tests/test_expression.txt')
-
-    converted_table = "".join(generate_table(lines, 'output.md'))
-
-    write_table_to_file(converted_table, 'output.md')
