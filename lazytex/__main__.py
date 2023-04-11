@@ -21,15 +21,15 @@ def main(args):
         output_type = "Table"
         print(f"\nConverted {args.input_file} to LaTeX table.\n")
 
-    if args.output_file:
-        output_file = args.output_file
-        tu.write_table_to_file(output_latex, output_file)
-        print(f"{output_type} written to {output_file}")
+    if args.write_to:
+        write_to = args.write_to
+        tu.write_table_to_file(output_latex, write_to)
+        print(f"{output_type} written to {write_to}")
         return 0
-    elif args.append:
-        output_file = args.append
-        tu.append_latex_to_existing_file(output_latex, output_file)
-        print(f"{output_type} appended to {output_file}")
+    elif args.append_to:
+        write_to = args.append_to
+        tu.append_latex_to_existing_file(output_latex, write_to)
+        print(f"{output_type} appended to {write_to}")
         return 0
 
     pyperclip.copy(output_latex)
@@ -42,7 +42,7 @@ def main(args):
 
 def parse_args(args=None):
     parser = argparse.ArgumentParser(
-        description='Converts logical statements in a simple format to LaTeX. If an output file is specified with the -o flag, will write the converted LaTeX statements to the output file, or with the -a flag, append to it. Otherwise, they will be copied to the user\'s clipboard')
+        description='Converts logical statements in a simple format to LaTeX. If an output file is specified with the -w flag, will write the converted LaTeX statements to the output file, or with the -a flag, append to it. Otherwise, they will be copied to the user\'s clipboard')
 
     parser.add_argument(
         'input_file',
@@ -59,8 +59,8 @@ def parse_args(args=None):
     )
 
     parser.add_argument(
-        '-o',
-        '--output_file',
+        '-w',
+        '--write_to',
         type=str,
         help='The file to write the LaTeX table to. Overwrites the file if it already exists.'
     )

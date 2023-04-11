@@ -80,17 +80,17 @@ def generate_table(lines: list) -> None:
     return table
 
 
-def check_file_exists(output_file: str) -> None | bool:
+def check_file_exists(write_to: str) -> None | bool:
     """
     Checks if the output file already exists. If it does, asks the user
     if they want to overwrite it. If not, exits the program. Returns True if
     the file exists and the user wants to overwrite it.
     """
 
-    if not pathlib.Path(output_file).exists():
+    if not pathlib.Path(write_to).exists():
         return
 
-    print(f"Warning: file '{output_file}' already exists.", file=sys.stderr)
+    print(f"Warning: file '{write_to}' already exists.", file=sys.stderr)
 
     continue_check = ""
     while continue_check.lower() not in ['y', 'n']:
@@ -102,31 +102,31 @@ def check_file_exists(output_file: str) -> None | bool:
     return True
 
 
-def write_table_to_file(table: list, output_file: str) -> None:
+def write_table_to_file(table: list, write_to: str) -> None:
     """
     Takes a list of formatted markdown table rows and writes them to the
     output file. The file is overwritten if it already exists.
-    This function runs if a user specifies an ouput file with the -o flag
+    This function runs if a user specifies an ouput file with the -w flag
     rathenr than the -a flag, which appends to an existing file.
     """
 
-    check_file_exists(output_file)
+    check_file_exists(write_to)
 
-    with open(output_file, 'w') as f:
+    with open(write_to, 'w') as f:
         f.write("".join(table))
 
 
-def append_latex_to_existing_file(row: str, output_file: str) -> None:
+def append_latex_to_existing_file(row: str, write_to: str) -> None:
     """
     Takes a formatted markdown table row and appends it to the end of the
     output file, without overwriting the file. This function runs if a user
-    specifies an ouput file with the -a flag rather than the -o flag, which
+    specifies an ouput file with the -a flag rather than the -w flag, which
     overwrites an existing file.
     """
 
-    if not pathlib.Path(output_file).exists():
-        print(f"Error: file '{output_file}' not found.", file=sys.stderr)
+    if not pathlib.Path(write_to).exists():
+        print(f"Error: file '{write_to}' not found.", file=sys.stderr)
         sys.exit(1)
 
-    with open(output_file, 'a') as f:
+    with open(write_to, 'a') as f:
         f.write(row)
