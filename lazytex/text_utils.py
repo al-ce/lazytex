@@ -105,10 +105,28 @@ def check_file_exists(output_file: str) -> None | bool:
 def write_table_to_file(table: list, output_file: str) -> None:
     """
     Takes a list of formatted markdown table rows and writes them to the
-    output file.
+    output file. The file is overwritten if it already exists.
+    This function runs if a user specifies an ouput file with the -o flag
+    rathenr than the -a flag, which appends to an existing file.
     """
 
     check_file_exists(output_file)
 
     with open(output_file, 'w') as f:
         f.write("".join(table))
+
+
+def append_latex_to_existing_file(row: str, output_file: str) -> None:
+    """
+    Takes a formatted markdown table row and appends it to the end of the
+    output file, without overwriting the file. This function runs if a user
+    specifies an ouput file with the -a flag rather than the -o flag, which
+    overwrites an existing file.
+    """
+
+    if not pathlib.Path(output_file).exists():
+        print(f"Error: file '{output_file}' not found.", file=sys.stderr)
+        sys.exit(1)
+
+    with open(output_file, 'a') as f:
+        f.write(row)

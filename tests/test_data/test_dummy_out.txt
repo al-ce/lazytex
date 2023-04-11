@@ -1,0 +1,2 @@
+dummy text
+(p \to q) \ \land \ [c \ \lor \ (t \leftrightarrow r)]
