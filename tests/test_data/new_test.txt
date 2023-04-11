@@ -1,0 +1,1 @@
+p \to qp \to q \ \land \ r

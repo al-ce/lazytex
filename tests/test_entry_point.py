@@ -42,7 +42,7 @@ def test_cli_input_file(monkeypatch, tmp_path, capsys):
     # Overwrite the file with some dummy text to be certain of the eventual
     # file contents
     with open("tests/test_data/test_dummy_out.txt", "w") as f:
-        f.write("dummy text\n")
+        f.write("dummy text")
 
     # Confirm overwrite
     monkeypatch.setattr("builtins.input", lambda _: "y")
@@ -156,7 +156,7 @@ def test_cli_statement_arg(monkeypatch, capsys):
     # Overwrite the file with some dummy text to be certain of the eventual
     # file contents
     with open("tests/test_data/test_dummy_out.txt", "w") as f:
-        f.write("dummy text\n")
+        f.write("dummy text")
 
     # Confirm overwrite
     monkeypatch.setattr("builtins.input", lambda _: "y")

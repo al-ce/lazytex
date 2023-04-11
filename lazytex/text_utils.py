@@ -129,4 +129,6 @@ def append_latex_to_existing_file(row: str, write_to: str) -> None:
         sys.exit(1)
 
     with open(write_to, 'a') as f:
+        f.write("\n")
         f.write(row)
+
