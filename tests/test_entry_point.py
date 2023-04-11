@@ -39,16 +39,8 @@ def test_cli_file_args(monkeypatch, tmp_path):
         main(test_args)
     assert not output_file.is_file()
 
-    # Test that default output filename is used if no output filename is given
-    output_file = None
-    test_args = parse_args([str(input_file)])
-    main(test_args)
-    assert Path("lazytex_output.md").is_file()
-    Path("lazytex_output.md").unlink()
-    assert not Path("lazytex_output.md").is_file()
 
-
-def test_cli_statement_conversion(capsys):
+def test_cli_statement_conversion(monkeypatch, capsys):
     """
     Test that the main function prints a LaTeX statement to stdout and copies
     it to the clipboard when given a string arg with the -s flag.
@@ -56,9 +48,18 @@ def test_cli_statement_conversion(capsys):
 
     statement = "(p > q) and [c or (t > r)]"
     test_args = parse_args(["-s", statement])
+
+    # Test a successul clipboard copy
     main(test_args)
     captured = capsys.readouterr()
     expected_latex = "(p \\to q) \\ \\land \\ [\\mathbf{c} \\ \\lor \\ (\\mathbf{t} \\to r)]"
-    assert captured.out.rstrip() == expected_latex + "\nStatement copied to clipboard."
+    assert captured.out.rstrip() == expected_latex + \
+        "\nStatement copied to clipboard."
     assert pyperclip.paste() == expected_latex
 
+    # Test a failed clipboard copy
+    monkeypatch.setattr(pyperclip, "paste", lambda: None)
+    main(test_args)
+    captured = capsys.readouterr()
+    assert captured.out.rstrip() == expected_latex + \
+        "\nFailed to copy statement to clipboard."

@@ -13,31 +13,36 @@ def main(args):
             print("Statement copied to clipboard.")
         else:
             print("Failed to copy statement to clipboard.")
-        return
+        return 0
 
-    if args.input_file:
-        lines = tu.get_file_lines(args.input_file)
-        converted_table = "".join(tu.generate_table(lines))
+    if not args.input_file:
+        print("Either an input file or a statement, must be provided, but not both.")
+        return 1
 
-        output_file = args.output_file if args.output_file else "lazytex_output.md"
+    lines = tu.get_file_lines(args.input_file)
+    converted_table = "".join(tu.generate_table(lines))
+    print(f"\nConverted {args.input_file} to LaTeX table.\n")
+
+    if args.output_file:
+        output_file = args.output_file
         tu.write_table_to_file(converted_table, output_file)
-
         print(f"Table written to {output_file}")
-        return
-
-    print("Either an input file or a statement, must be provided, but not both.")
-    return 1
+    else:
+        pyperclip.copy(converted_table)
+        print("No output file specified, table copied to clipboard.")
+        print("Table copied to clipboard.")
+        return 0
 
 
 def parse_args(args=None):
     parser = argparse.ArgumentParser(
-        description='Converts logical statements in a simple format to LaTeX.')
+        description='Converts logical statements in a simple format to LaTeX. If an output file is specified with the -o flag, will write the converted LaTeX statements to the output file, otherwise, they will be copied to the user\'s clipboard')
 
     parser.add_argument(
         'input_file',
         type=str,
         nargs='?',
-        help='The file to read the logical statements from.'
+        help='The file to read the logical statements from to be converted.'
     )
 
     parser.add_argument(
