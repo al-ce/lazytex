@@ -60,6 +60,15 @@ def parse_args(args=None):
         help='The file to write the LaTeX table to. Defaults to "lazytex_output.md".'
     )
 
+    parser.add_argument(
+        '-a',
+        '--append_to',
+        type=str,
+        help='The file to append a LaTeX table or a single statement to. The file must already exist.'
+    )
+
+    parser.add_argument('-v', '--version', action='version', version='0.1.0')
+
     args = parser.parse_args(args)
 
     return args

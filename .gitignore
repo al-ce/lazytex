@@ -6,6 +6,7 @@
 
 !.gitignore
 !README.md
+!LICENSE
 
 __pycache__
 *.egg-info

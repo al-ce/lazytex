@@ -1,0 +1,12 @@
+# Show these statements are equivalent using logical equivalence laws
+
+p > q == (p and -q) > (q and -q)
+
+# START
+p > q == (p and -q) > (q and -q)
+== -(p and -q) or (q and -q)  # by implication
+== (-p or q) or (q and -q)    # by De Morgan's law and double negation
+== (-p) or [q or (q and -q)]  # by associative law
+== (-p) or [q or c]           # by negation law
+== -p or q                    # by identity law
+== p > q                      # by implication
