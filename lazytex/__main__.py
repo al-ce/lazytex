@@ -27,6 +27,7 @@ def main(args):
         output_file = args.output_file
         tu.write_table_to_file(converted_table, output_file)
         print(f"Table written to {output_file}")
+        return 0
     else:
         pyperclip.copy(converted_table)
         print("No output file specified, table copied to clipboard.")
