@@ -91,6 +91,8 @@ def test_generate_table():
     ]
 
     expected_table = [
+        "| Equivalence | Law |\n",
+        "| :--- | :--- |\n",
         "| $\\ \\ \\ \\ \\ p \\to q \\ \\equiv \\ p \\ \\lor \\ q$ | --- |\n",
         "| $\\ \\equiv \\ p \\ \\lor \\ q$ | by implication |\n",
     ]
@@ -130,6 +132,8 @@ def test_write_table_to_file():
     """
 
     test_table = [
+        "| Equivalence | Law |\n",
+        "| :--- | :--- |\n",
         "| $\\ \\ \\ \\ \\ p \\to q \\ \\equiv \\ p \\ \\lor \\ q$ | --- |\n",
         "| $\\ \\equiv \\ p \\ \\lor \\ q$ | by implication |\n",
     ]
@@ -141,12 +145,6 @@ def test_write_table_to_file():
     with open("tests/test_data/test_output.md", "r") as f:
         output = f.readlines()
 
-    to_insert = [
-        "| Equivalence | Law |\n",
-        "| :--- | :--- |\n",
-    ]
-    reference_table = to_insert + test_table
-
-    assert output == reference_table
+    assert output == test_table
     pathlib.Path("tests/test_data/test_output.md").unlink()
     assert not pathlib.Path("tests/test_data/test_output.md").is_file()

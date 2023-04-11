@@ -70,7 +70,8 @@ def generate_table(lines: list) -> None:
     """
 
     start_index = lines.index("# START\n")
-    table = []
+    # Initialize the table with the header and alignment rows
+    table = ["| Equivalence | Law |\n", "| :--- | :--- |\n"]
     for line in lines[start_index+1:]:
         line = line.rstrip()
         row = line.split("# ")
@@ -111,6 +112,4 @@ def write_table_to_file(table: list, output_file: str) -> None:
     check_file_exists(output_file)
 
     with open(output_file, 'w') as f:
-        f.write("| Equivalence | Law |\n")
-        f.write("| :--- | :--- |\n")  # Add alignment for the table columns
         f.write("".join(table))
