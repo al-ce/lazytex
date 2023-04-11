@@ -23,7 +23,7 @@ version = "0.1.0"
 
 
 [project.scripts]
-karaml = "lazytex.__main__:main"
+lazytex = "lazytex.__main__:main"
 
 [project.urls]
 "Homepage" = "https://github.com/al-ce/lazytex"
