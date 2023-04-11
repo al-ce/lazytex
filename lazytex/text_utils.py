@@ -44,9 +44,8 @@ def format_row(statement: str, law: str) -> str:
     Returns a formatted markdown table row in the form:
     | $<statement>$ | <law> |
     """
-    start = "| $\\ \\ \\ \\ \\ " if law == "---" else "| $\\ \\equiv \\ "
     latex_statement = convert_to_latex(statement)
-    return start + latex_statement.rstrip() + "$ | " + law.rstrip() + " |\n"
+    return "| $" + latex_statement.rstrip() + "$ | " + law.rstrip() + " |\n"
 
 
 def generate_table(lines: list) -> None:

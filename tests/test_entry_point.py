@@ -56,7 +56,7 @@ def test_cli_file_args(monkeypatch, tmp_path, capsys):
     expected_table = "" \
         "| Equivalence | Law |\n" \
         "| :--- | :--- |\n" \
-        "| $\\ \\ \\ \\ \\ (p \\to q) \\leftrightarrow (p \\ \\land \\ q)$ | --- |\n"
+        "| $(p \\to q) \\leftrightarrow (p \\ \\land \\ q)$ | --- |\n"
 
     assert pyperclip.paste() == expected_table
 

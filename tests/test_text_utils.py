@@ -65,11 +65,11 @@ def test_format_row():
     """
 
     test_data = [
-        ("p or q", "by implication",
+        ("== p or q", "by implication",
          "| $\\ \\equiv \\ p \\ \\lor \\ q$ | by implication |\n"),
-        ("hello", "world", "| $\\ \\equiv \\ hello$ | world |\n"),
-        ("", "", "| $\\ \\equiv \\ $ |  |\n"),
-        ("no law", "---", "| $\\ \\ \\ \\ \\ no law$ | --- |\n"),
+        ("hello", "world", "| $hello$ | world |\n"),
+        ("", "", "| $$ |  |\n"),
+        ("no law", "---", "| $no law$ | --- |\n"),
     ]
     for statement, law, expected_output in test_data:
         assert tu.format_row(statement, law) == expected_output
@@ -89,13 +89,13 @@ def test_generate_table():
         "dummy line\n",
         "# START\n",
         "p > q == p or q",
-        "p or q # by implication\n",
+        "== p or q # by implication\n",
     ]
 
     expected_table = [
         "| Equivalence | Law |\n",
         "| :--- | :--- |\n",
-        "| $\\ \\ \\ \\ \\ p \\to q \\ \\equiv \\ p \\ \\lor \\ q$ | --- |\n",
+        "| $p \\to q \\ \\equiv \\ p \\ \\lor \\ q$ | --- |\n",
         "| $\\ \\equiv \\ p \\ \\lor \\ q$ | by implication |\n",
     ]
 
@@ -103,13 +103,13 @@ def test_generate_table():
 
     valid_list = [
         "p > q == p or q",
-        "p or q # by implication\n",
+        "== p or q # by implication\n",
     ]
 
     expected_table = [
         "| Equivalence | Law |\n",
         "| :--- | :--- |\n",
-        "| $\\ \\ \\ \\ \\ p \\to q \\ \\equiv \\ p \\ \\lor \\ q$ | --- |\n",
+        "| $p \\to q \\ \\equiv \\ p \\ \\lor \\ q$ | --- |\n",
         "| $\\ \\equiv \\ p \\ \\lor \\ q$ | by implication |\n",
     ]
 
