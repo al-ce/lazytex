@@ -69,10 +69,11 @@ def generate_table(lines: list) -> None:
     table of the statements and laws to the output file.
     """
 
-    start_index = lines.index("# START\n")
+    start_index = lines.index("# START\n") + 1 if "# START\n" in lines else 0
+
     # Initialize the table with the header and alignment rows
     table = ["| Equivalence | Law |\n", "| :--- | :--- |\n"]
-    for line in lines[start_index+1:]:
+    for line in lines[start_index:]:
         line = line.rstrip()
         row = line.split("# ")
         statement = row[0]

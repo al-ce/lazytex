@@ -77,15 +77,30 @@ def test_format_row():
 def test_generate_table():
     """
     Test that :func:`generate_table` correctly generates a markdown table of
-    statements and laws. It should only start adding to the table after a line
-    that contains the `# START` string. It should set the 'law' variable to
-    "---" if no law is found on the line.
+    statements and laws. If a line contains the `# START` string, it should
+    only start adding to the table after a line that contains the `# START`
+    string. Otherwise, it should start adding to the table from the first line.
+    It should set the 'law' variable to "---" if no law is found on the line.
 
     """
 
     valid_list = [
         "dummy line\n",
         "# START\n",
+        "p > q == p or q",
+        "p or q # by implication\n",
+    ]
+
+    expected_table = [
+        "| Equivalence | Law |\n",
+        "| :--- | :--- |\n",
+        "| $\\ \\ \\ \\ \\ p \\to q \\ \\equiv \\ p \\ \\lor \\ q$ | --- |\n",
+        "| $\\ \\equiv \\ p \\ \\lor \\ q$ | by implication |\n",
+    ]
+
+    assert tu.generate_table(valid_list) == expected_table
+
+    valid_list = [
         "p > q == p or q",
         "p or q # by implication\n",
     ]
