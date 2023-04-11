@@ -1,5 +1,6 @@
 import pytest
 from pathlib import Path
+import pyperclip
 from lazytex.__main__ import main, parse_args
 
 
@@ -45,3 +46,19 @@ def test_cli_file_args(monkeypatch, tmp_path):
     assert Path("lazytex_output.md").is_file()
     Path("lazytex_output.md").unlink()
     assert not Path("lazytex_output.md").is_file()
+
+
+def test_cli_statement_conversion(capsys):
+    """
+    Test that the main function prints a LaTeX statement to stdout and copies
+    it to the clipboard when given a string arg with the -s flag.
+    """
+
+    statement = "(p > q) and [c or (t > r)]"
+    test_args = parse_args(["-s", statement])
+    main(test_args)
+    captured = capsys.readouterr()
+    expected_latex = "(p \\to q) \\ \\land \\ [\\mathbf{c} \\ \\lor \\ (\\mathbf{t} \\to r)]"
+    assert captured.out.rstrip() == expected_latex + "\nStatement copied to clipboard."
+    assert pyperclip.paste() == expected_latex
+
