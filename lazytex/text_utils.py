@@ -24,12 +24,10 @@ def convert_to_latex(statement: str) -> str:
     Returns the converted string.
     """
     operators = {
-        "t": "\\mathbf{t}",  # the t replacement must come before >
-        "c": "\\mathbf{c}",
-        "<->": "\\leftrightarrow",  # the <-> replacement must come before >
-        ">": "\\to",
-        "and": "\\ \\land \\",
-        "or": "\\ \\lor \\",
+        "<->": "\\leftrightarrow",
+        " > ": " \\to ",
+        " and ": " \\ \\land \\ ",
+        " or ": " \\ \\lor \\ ",
         "-": "\\sim ",
         "==": "\\ \\equiv \\"
     }

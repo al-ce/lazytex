@@ -73,7 +73,7 @@ def test_cli_statement_conversion(monkeypatch, capsys):
     # Test a successul clipboard copy
     main(test_args)
     captured = capsys.readouterr()
-    expected_latex = "(p \\to q) \\ \\land \\ [\\mathbf{c} \\ \\lor \\ (\\mathbf{t} \\leftrightarrow r)]"
+    expected_latex = "(p \\to q) \\ \\land \\ [c \\ \\lor \\ (t \\leftrightarrow r)]"
     assert captured.out.rstrip() == expected_latex + \
         "\nStatement copied to clipboard."
     assert pyperclip.paste() == expected_latex

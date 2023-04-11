@@ -28,12 +28,10 @@ def test_text_to_latex():
     """
 
     tex_pairs = [
-        ("t", "\\mathbf{t}"),
-        ("c", "\\mathbf{c}"),
         ("<->", "\\leftrightarrow"),
-        (">", "\\to"),
-        ("and", "\\ \\land \\"),
-        ("or", "\\ \\lor \\"),
+        (" > ", " \\to "),
+        (" and ", " \\ \\land \\ "),
+        (" or ", " \\ \\lor \\ "),
         ("-", "\\sim "),
         ("==", "\\ \\equiv \\"),
         ("p > q", "p \\to q"),
@@ -42,7 +40,7 @@ def test_text_to_latex():
         ("-p", "\\sim p"),
         ("p == q", "p \\ \\equiv \\ q"),
         ("p and -q or c > t",
-            "p \\ \\land \\ \\sim q \\ \\lor \\ \\mathbf{c} \\to \\mathbf{t}"),
+            "p \\ \\land \\ \\sim q \\ \\lor \\ c \\to t"),
         ("", ""),
         ("   ", "   "),
         ("hello", "hello")
