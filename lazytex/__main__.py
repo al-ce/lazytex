@@ -14,6 +14,7 @@ def main(args):
         output_type = "Statement"
         print("Converted statement to LaTeX:\n")
         print(output_latex)
+        print()
 
     elif args.input_file:
         lines = tu.get_file_lines(args.input_file)

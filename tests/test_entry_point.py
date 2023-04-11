@@ -119,7 +119,7 @@ def test_cli_statement_arg(monkeypatch, capsys):
     expected_latex = "(p \\to q) \\ \\land \\ [c \\ \\lor \\ (t \\leftrightarrow r)]"
     assert captured.out.rstrip() == "Converted statement to LaTeX:\n\n"\
         + expected_latex + \
-        "\nStatement copied to clipboard."
+        "\n\nStatement copied to clipboard."
     assert pyperclip.paste() == expected_latex
 
     # Test a failed clipboard copy
@@ -128,7 +128,7 @@ def test_cli_statement_arg(monkeypatch, capsys):
     captured = capsys.readouterr()
     assert captured.out.rstrip() == "Converted statement to LaTeX:\n\n"\
         + expected_latex + \
-        "\nFailed to copy statement to clipboard."
+        "\n\nFailed to copy statement to clipboard."
 
     # Test that the program overwrites a file with the contents of the
     # converted statement if the user adds the -w flag, or appends to a file
@@ -143,7 +143,7 @@ def test_cli_statement_arg(monkeypatch, capsys):
     captured = capsys.readouterr()
     assert captured.out.rstrip() == "Converted statement to LaTeX:\n\n"\
         + expected_latex + \
-        "\nStatement written to tests/test_data/test_dummy_out.txt"
+        "\n\nStatement written to tests/test_data/test_dummy_out.txt"
 
     # Read file contents and confirm that they are correct
     with open("tests/test_data/test_dummy_out.txt", "r") as f:
@@ -167,7 +167,7 @@ def test_cli_statement_arg(monkeypatch, capsys):
     captured = capsys.readouterr()
     assert captured.out.rstrip() == "Converted statement to LaTeX:\n\n"\
         + expected_latex + \
-        "\nStatement appended to tests/test_data/test_dummy_out.txt"
+        "\n\nStatement appended to tests/test_data/test_dummy_out.txt"
 
     # Read file contents and confirm that they are correct
     with open("tests/test_data/test_dummy_out.txt", "r") as f:
