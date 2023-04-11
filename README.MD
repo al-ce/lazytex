@@ -6,19 +6,19 @@ a Markdown table with two columns, one for a logical statement in LaTeX format
 and one for a plain text comment about which logical equivalence law was used
 to transform the statement.
 
-VIDEO GOES HERE
+https://user-images.githubusercontent.com/23170004/231308098-c4fed725-cc8a-41c4-987f-dd21858639e6.mov
 
 The intention behind this program is to let a user type out a long sequence of
 statements so they can remain in a readable format while working on the
 problem, and then doing all the conversion to LaTeX and a Markdown table in one
 command.
 
-
 # Dependencies
 
 - Python 3.8+
 
 `pip` will also install the following dependencies:
+
 - `pyperclip` for copying to clipboard
 
 # Installation
@@ -28,17 +28,16 @@ Clone this repository and run `pip install .` from the root directory.
 After install, you can run `lazytex` from the command line in any directory.
 Test it with `lazytex -h` to see the help message or `lazytex -v` to see the version.
 
-
 # Conversion syntax
 
-| Plain syntax | LaTeX syntax          |
-| ------------ | --------------------- |
-| -p           | $\sim p$              |
-| p > q        | $p \to q$             |
-| p and q      | $p \land q$           |
-| p or q       | $p \lor q$            |
-| p <-> q      | $p \leftrightarrow q$ |
-| p == q       | $p \equiv q$          |
+| Plain syntax | LaTeX syntax        | Visual example        |
+| ------------ | ------------------- | --------------------- |
+| -p           | \sim p              | $\sim p$              |
+| p > q        | p \to q             | $p \to q$             |
+| p and q      | p \land q           | $p \land q$           |
+| p or q       | p \lor q            | $p \lor q$            |
+| p <-> q      | p \leftrightarrow q | $p \leftrightarrow q$ |
+| p == q       | p \equiv q          | $p \equiv q$          |
 
 For a more complex example:
 
@@ -59,7 +58,6 @@ text, text styling, etc, and maybe even actual LaTeX headers, footers, etc.
 Currently, this program is mainly intended for use in embedded LaTeX in a
 markdown file when taking notes.
 
-
 # Usage
 
 From your terminal, `lazytex` can be run with the following arguments/options:
@@ -73,8 +71,9 @@ From your terminal, `lazytex` can be run with the following arguments/options:
 
 ## Input
 
-You can either pass a single statement string as an argument to `lazytex` with the `-s`
-flag, or you can pass a relative or absolute filepath to a file to read from.
+You can either pass a single statement string enclosed in quotes as an argument
+to `lazytex` with the `-s` flag, or you can pass a relative or absolute
+filepath to a file to read from.
 
 For example, if you pass a statement, `lazytex` will convert it to LaTeX as a single line,
 like so:
@@ -82,6 +81,7 @@ like so:
 ```bash
 lazytex -s "== [p > (-q and c) or (-p or (t <-> r))]"
 ```
+
 `lazytex` will convert this to:
 
 ```
@@ -116,7 +116,7 @@ Notice how `lazytex` ignores everything up to the `# START` line so you can
 include comments and other information in your input file.
 In a Markdown app that can embed LaTeX or MathJax, it would look like this:
 
-EMBEDDED IMAGE
+<img width="643" alt="md_table_example" src="https://user-images.githubusercontent.com/23170004/231308070-b1be01e3-4f18-4069-80cd-ca7326d1fe42.png">
 
 ## Output
 
@@ -131,6 +131,7 @@ If the file you specified already exists, `lazytex` will confirm with you that y
 ```bash
 lazytex path/to/input.txt -w path/to/output.txt
 ```
+
 ```stdout
 Converted tests/test_data/hammack_example.txt to LaTeX table.
 
@@ -171,4 +172,20 @@ lazytex path/to/input.txt -a path/to/output.txt
 Converted path/to/input.txt to LaTeX table.
 
 Table appended to path/to/output.txt
+```
+
+# Tests
+
+See the [tests/](https://github.com/al-ce/lazytex/tree/main/tests) directory. Most of this project ended up being practice for writing unit tests as I made this clearly overly-engineered CLI tool (just use regex!).
+
+```bash
+❯ coverage report -m
+Name                        Stmts   Miss  Cover   Missing
+---------------------------------------------------------
+lazytex/__main__.py            46      2    96%   49, 88
+lazytex/text_utils.py          52      3    94%   15-17
+tests/test_entry_point.py      82      0   100%
+tests/test_text_utils.py       45      0   100%
+---------------------------------------------------------
+TOTAL                         225      5    98%
 ```
