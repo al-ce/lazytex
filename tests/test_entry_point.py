@@ -56,7 +56,7 @@ def test_cli_file_args(monkeypatch, tmp_path, capsys):
     expected_table = "" \
         "| Equivalence | Law |\n" \
         "| :--- | :--- |\n" \
-        "| $\\ \\ \\ \\ \\ p \\to q$ | --- |\n"
+        "| $\\ \\ \\ \\ \\ (p \\to q) \\leftrightarrow (p \\ \\land \\ q)$ | --- |\n"
 
     assert pyperclip.paste() == expected_table
 
@@ -67,13 +67,13 @@ def test_cli_statement_conversion(monkeypatch, capsys):
     it to the clipboard when given a string arg with the -s flag.
     """
 
-    statement = "(p > q) and [c or (t > r)]"
+    statement = "(p > q) and [c or (t <-> r)]"
     test_args = parse_args(["-s", statement])
 
     # Test a successul clipboard copy
     main(test_args)
     captured = capsys.readouterr()
-    expected_latex = "(p \\to q) \\ \\land \\ [\\mathbf{c} \\ \\lor \\ (\\mathbf{t} \\to r)]"
+    expected_latex = "(p \\to q) \\ \\land \\ [\\mathbf{c} \\ \\lor \\ (\\mathbf{t} \\leftrightarrow r)]"
     assert captured.out.rstrip() == expected_latex + \
         "\nStatement copied to clipboard."
     assert pyperclip.paste() == expected_latex

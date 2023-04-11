@@ -30,6 +30,7 @@ def test_text_to_latex():
     tex_pairs = [
         ("t", "\\mathbf{t}"),
         ("c", "\\mathbf{c}"),
+        ("<->", "\\leftrightarrow"),
         (">", "\\to"),
         ("and", "\\ \\land \\"),
         ("or", "\\ \\lor \\"),
